@@ -133,21 +133,21 @@ public class MemberRestController {
             HttpSession session) {
         try {
         	// 사용자가 승인되었는지 확인
-            Member sessionMember = (Member) session.getAttribute("member");
-            if (sessionMember == null || (!sessionMember.getId().equals(id) && 
-                !sessionMember.getRole().equals("admin"))) {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("message", "이 회원을 삭제할 권한이 없습니다."));
-            }
+//            Member sessionMember = (Member) session.getAttribute("member");
+//            if (sessionMember == null || (!sessionMember.getId().equals(id) && 
+//                !sessionMember.getRole().equals("admin"))) {
+//                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+//                    .body(Map.of("message", "이 회원을 삭제할 권한이 없습니다."));
+//            }
             
             String password = deleteData.get("password");
             int result = memberService.deleteMember(id, password);
             
             if (result > 0) {
                 // If user deleted themselves, invalidate session
-                if (sessionMember.getId().equals(id)) {
-                    session.invalidate();
-                }
+//                if (sessionMember.getId().equals(id)) {
+//                    session.invalidate();
+//                }
                 
                 return ResponseEntity.ok(Map.of("message", "회원이 성공적으로 삭제되었습니다."));
             } else {
